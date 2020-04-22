@@ -2,8 +2,6 @@
 import os
 import numpy as np
 np.random.seed(1969)
-import tensorflow as tf
-tf.set_random_seed(1969)
 from numpy import genfromtxt
 
 from scipy import signal
