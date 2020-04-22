@@ -76,7 +76,7 @@ class DataGenerator():
         self.progress = 0
         self.n_samples = self.X.shape[0]
     
-    def get_next_batch(batch_size):
+    def get_next_batch(self, batch_size):
         while True:
             pass
 
