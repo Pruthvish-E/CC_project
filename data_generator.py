@@ -35,7 +35,7 @@ class DataGenerator():
 
             self.labels.append(label)
             self.X.append(genfromtxt(fpath))
-        print("There are %d samples"%len(labels))
+        print("There are %d samples"%len(self.labels))
         
         #padding section of hte code 
         self.maxlen = max([x.shape[0] for x in self.X] + [self.maxlen])
@@ -45,7 +45,7 @@ class DataGenerator():
 
         for i in self.X:
             listx = list(i)
-            for i in range(maxlen - len(listx)):
+            for i in range(self.maxlen - len(listx)):
                 listx.append(np.zeros((self.features)))
             X_new.append(listx)
         self.X, X_new = X_new, self.X
@@ -62,17 +62,17 @@ class DataGenerator():
             print("%s : %d"%(i, self.labels.count(i)))
 
         for i in self.labels:
-            onehot = [0 for k in range(len(labels))]
+            onehot = [0 for k in range(len(self.labels))]
             onehot[self.labels.index(i)] = 1
             self.y.append(onehot)
 
         self.y = np.asarray(self.y, dtype = np.float32)
 
     def __init__(self, heirarchy, path, maxlen = float('-inf')):
+        self.maxlen = maxlen
         self.list_npy_fname(path, heirarchy)
         self.progress = 0
         self.n_samples = self.X.shape[0]
-        self.maxlen = maxlen
     def get_next_batch(self, batch_size):
         while True:
             pass
