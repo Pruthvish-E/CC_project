@@ -11,7 +11,6 @@ import pandas as pd
 import gc
 from scipy.io import wavfile
 
-
 class DataGenerator():
 
     def list_npy_fname(self, dirpath, heirarchy, ext='npy',restrictA=False):
@@ -39,7 +38,7 @@ class DataGenerator():
         print("There are %d samples"%len(labels))
         
         #padding section of hte code 
-        self.maxlen = max([x.shape[0] for x in self.X])
+        self.maxlen = max([x.shape[0] for x in self.X] + [self.maxlen])
         self.features = self.X[0].shape[1]
         print("The maximum length of the dataset is %d, padding to this length"%self.maxlen)
         X_new = []
@@ -69,11 +68,11 @@ class DataGenerator():
 
         self.y = np.asarray(self.y, dtype = np.float32)
 
-    def __init__(self, heirarchy, path):
+    def __init__(self, heirarchy, path, maxlen = float('-inf')):
         self.list_npy_fname(path, heirarchy)
         self.progress = 0
         self.n_samples = self.X.shape[0]
-    
+        self.maxlen = maxlen
     def get_next_batch(self, batch_size):
         while True:
             pass

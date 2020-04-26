@@ -22,7 +22,7 @@ model_name = ''
 EPOCHS = 50
 
 train_data = DataGenerator(heirarchy, train_path)
-val_data = DataGenerator(heirarchy, val_path)
+val_data = DataGenerator(heirarchy, val_path, maxlen=train_data.maxlen)
 
 classifier = Sequential()
 classifier.add(Conv2D(32,(3,3), input_shape=(train_data.maxlen,train_data.features,1), activation ='relu'))
