@@ -11,9 +11,9 @@ from keras.layers import Dense
 from data_generator import DataGenerator
 
 heirarchy = 1
-train_path = 0
-test_path = 0
-val_path = 0
+train_path = "/home/rohan/data-telugu/train-mfsc"
+test_path = "/home/rohan/data-telugu/test-mfsc"
+val_path = "/home/rohan/data-telugu/val-mfsc"
 BATCH_SIZE = 512
 tensorboard_log_dir = 'logs'
 classifier_save_dir = '../classifiers'
