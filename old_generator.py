@@ -13,13 +13,12 @@ from scipy.io import wavfile
 import pickle
 with open('dict.pickle', 'rb') as handle:
     heirarchydict = pickle.load(handle)
-with open('globval.pickle', 'rb') as handle:
-    fpaths = pickle.load(handle)
 class DataGenerator():
 
     def list_npy_fname(self, dirpath, heirarchy, ext='npy',restrictA=False):
         self.labels = []
         self.X = []
+        fpaths = sorted(glob(os.path.join(self.path, r'*/*' + ext)))
         for fpath in fpaths:
             split_by_slash = fpath.split('/')
             speaker = split_by_slash[-2]

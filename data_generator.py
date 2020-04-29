@@ -17,9 +17,6 @@ with open('dict.pickle', 'rb') as handle:
 
 with open('freqdict.pickle', 'rb') as handle:
     freqdict = pickle.load(handle)
-with open('globtrain.pickle', 'rb') as handle:
-    fpaths = pickle.load(handle)
-    
 class DataGenerator():
     def __init__(self, heirarchy, path,batch_size, maxlen = float('-inf'),  prefetch = 50):
         self.maxlen = maxlen
@@ -37,6 +34,7 @@ class DataGenerator():
         return {heirarchydict[self.heirarchy][key].index(1) : total//freqdict[self.heirarchy][key] for key in freqdict[self.heirarchy]}
 
     def get_next_sample(self, ext='npy'):
+        fpaths = sorted(glob(os.path.join(self.path, r'*/*' + ext)))
         while(True):
             for fpath in fpaths:
                 split_by_slash = fpath.split('/')
