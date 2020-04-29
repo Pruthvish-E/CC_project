@@ -37,9 +37,10 @@ class DataGenerator():
         #padding section of hte code 
         self.maxlen = max([x.shape[0] for x in self.X] + [self.maxlen])
         self.features = self.X[0].shape[1]
+        gc.collect()
         print("The maximum length of the dataset is %d, padding to this length"%self.maxlen)
         X_new = []
-
+        gc.collect()
         for i in self.X:
             listx = list(i)
             for i in range(self.maxlen - len(listx)):
@@ -50,6 +51,7 @@ class DataGenerator():
         del X_new
         self.X = np.asarray(self.X, dtype = np.float32)
         self.y = np.asarray(self.labels, dtype = np.int32)
+        gc.collect()
         del self.labels
         
 
