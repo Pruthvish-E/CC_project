@@ -68,7 +68,6 @@ class DataGenerator():
                 batch = self.batches.pop(0)
                 x = batch[0]
                 x = np.expand_dims(x, 3) #adding the last dimension (bs, l, w, "1")
-                gc.collect()
                 yield x, batch[1]
             self.add_batches()
             gc.collect()
