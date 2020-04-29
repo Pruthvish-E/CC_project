@@ -60,7 +60,6 @@ class DataGenerator():
                 batchx.append(d[0])
                 batchy.append(d[1])
             self.batches.append((np.asarray(batchx, dtype = np.float32), np.asarray(batchy, dtype = np.int32)))
-            gc.collect()      
    
         
     def get_next_batch(self):
