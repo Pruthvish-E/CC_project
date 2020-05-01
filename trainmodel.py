@@ -20,7 +20,7 @@ tensorboard_log_dir = 'logs'
 classifier_save_dir = '../classifiers'
 prob_dir = 'probs'
 model_name = ''
-EPOCHS = 50
+EPOCHS = 20
 
 train_data = DataGenerator(heirarchy, train_path, BATCH_SIZE, maxlen = 413)
 val_data = old_generator.DataGenerator(heirarchy, val_path, maxlen=train_data.maxlen)
