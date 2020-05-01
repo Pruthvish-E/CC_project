@@ -18,7 +18,7 @@ with open('dict.pickle', 'rb') as handle:
 with open('freqdict.pickle', 'rb') as handle:
     freqdict = pickle.load(handle)
 class DataGenerator():
-    def __init__(self, heirarchy, path,batch_size, maxlen = float('-inf'),  prefetch = 512):
+    def __init__(self, heirarchy, path,batch_size, maxlen = float('-inf'),  prefetch = 256):
         self.maxlen = maxlen
         self.path = path
         self.heirarchy = heirarchy
