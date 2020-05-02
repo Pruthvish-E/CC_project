@@ -20,7 +20,7 @@ tensorboard_log_dir = 'logs'
 classifier_save_dir = '../classifiers'
 prob_dir = 'probs'
 model_name = ''
-EPOCHS = 20
+EPOCHS = 10
 
 train_data = DataGenerator(heirarchy, train_path, BATCH_SIZE, maxlen = 413)
 val_data = old_generator.DataGenerator(heirarchy, val_path, maxlen=train_data.maxlen)
@@ -38,7 +38,8 @@ classifier.compile(optimizer='adam',loss=keras.losses.sparse_categorical_crossen
 classifier.summary()
 
 tensorboard = TensorBoard(log_dir=tensorboard_log_dir+'/train_'+model_name)
+cp = tf.keras.callbacks.ModelCheckpoint(filepath='/', mode='max', monitor='val_acc', verbose=2, save_best_only=True)
 #history = classifier.fit(*train_data.get_data(), batch_size=BATCH_SIZE, validation_data=val_data.getdata(), epochs=EPOCHS, shuffle=True, verbose=1, callbacks=[tensorboard])
-history = classifier.fit_generator(train_data.get_next_batch(), steps_per_epoch = (751575//BATCH_SIZE), epochs=EPOCHS, shuffle=True, verbose=1, callbacks=[tensorboard], class_weight = train_data.get_class_weights(), validation_data=val_data.getdata())
+history = classifier.fit_generator(train_data.get_next_batch(), steps_per_epoch = (751575//BATCH_SIZE), epochs=EPOCHS, shuffle=True, verbose=1, callbacks=[tensorboard,cp], class_weight = train_data.get_class_weights(), validation_data=val_data.getdata())
 
 classifier.save("test.h5")
