@@ -37,9 +37,25 @@ classifier.add(Dense(units=train_data.n_classes, activation='softmax'))
 classifier.compile(optimizer='adam',loss=keras.losses.sparse_categorical_crossentropy,metrics=['categorical_accuracy'])
 classifier.summary()
 
+class CustomCallback(keras.callbacks.Callback):
+    def __init__(self):
+        super().__init__()
+        self.curmax = float("-inf")
+    def on_epoch_end(self, epoch, logs=None):
+        validation_data=val_data.getdata()
+        _, acc = classifier.evaluate(*validation_data)
+        print("Epoch %d has val acc %f"%(epoch, acc))
+        if acc > self.curmax:
+            curmax = acc
+            classifier.save("max.h5")
+        classifier.save("latest.h5")
+        return super().on_epoch_end(epoch, logs=logs)
+
 tensorboard = TensorBoard(log_dir=tensorboard_log_dir+'/train_'+model_name)
-cp = keras.callbacks.ModelCheckpoint(filepath='/', mode='max', monitor='val_acc', verbose=2, save_best_only=True)
+
+cb = CustomCallback()
+#cp = keras.callbacks.ModelCheckpoint(filepath='/', mode='max', monitor='val_acc', verbose=2, save_best_only=True)
 #history = classifier.fit(*train_data.get_data(), batch_size=BATCH_SIZE, validation_data=val_data.getdata(), epochs=EPOCHS, shuffle=True, verbose=1, callbacks=[tensorboard])
-history = classifier.fit_generator(train_data.get_next_batch(), steps_per_epoch = (751575//BATCH_SIZE), epochs=EPOCHS, shuffle=True, verbose=1, callbacks=[tensorboard,cp], class_weight = train_data.get_class_weights(), validation_data=val_data.getdata())
+history = classifier.fit_generator(train_data.get_next_batch(), steps_per_epoch = (751575//BATCH_SIZE), epochs=EPOCHS, shuffle=True, verbose=1, callbacks=[tensorboard,cb], class_weight = train_data.get_class_weights())
 
 classifier.save("test.h5")
