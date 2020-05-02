@@ -38,7 +38,7 @@ print("finished loading all the data")
 # classifier.compile(optimizer='adam',loss=keras.losses.sparse_categorical_crossentropy,metrics=['categorical_accuracy'])
 # classifier.summary()
 
-classifier = classifier.load_model('test.h5')
+classifier = load_model('test.h5')
 
 class CustomCallback(keras.callbacks.Callback):
     def __init__(self):
