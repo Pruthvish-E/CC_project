@@ -18,7 +18,7 @@ with open('dict.pickle', 'rb') as handle:
 with open('freqdict.pickle', 'rb') as handle:
     freqdict = pickle.load(handle)
 class DataGenerator():
-    def __init__(self, heirarchy, path,batch_size, maxlen = float('-inf'),  prefetch = 256):
+    def __init__(self, heirarchy, path,batch_size, maxlen = float('-inf'),  prefetch = 50):
         self.maxlen = maxlen
         self.path = path
         self.heirarchy = heirarchy
@@ -70,5 +70,4 @@ class DataGenerator():
                 x = np.expand_dims(x, 3) #adding the last dimension (bs, l, w, "1")
                 yield x, batch[1]
             self.add_batches()
-            gc.collect()
             

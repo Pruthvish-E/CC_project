@@ -22,8 +22,8 @@ prob_dir = 'probs'
 model_name = ''
 EPOCHS = 10
 
-train_data = DataGenerator(heirarchy, train_path, BATCH_SIZE, maxlen = 413)
-val_data = old_generator.DataGenerator(heirarchy, val_path, maxlen=train_data.maxlen)
+val_data = old_generator.DataGenerator(heirarchy, val_path, maxlen=413)
+train_data = DataGenerator(heirarchy, train_path, BATCH_SIZE, maxlen = 413, prefetch=500)
 
 print("finished loading all the data")
 classifier = Sequential()
