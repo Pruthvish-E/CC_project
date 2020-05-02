@@ -9,6 +9,7 @@ from keras.layers import Conv2D, Dropout
 from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
+from keras.models import load_model
 from data_generator import DataGenerator
 
 heirarchy = 1
@@ -26,16 +27,18 @@ val_data = old_generator.DataGenerator(heirarchy, val_path, maxlen=413)
 train_data = DataGenerator(heirarchy, train_path, BATCH_SIZE, maxlen = 413, prefetch=500)
 
 print("finished loading all the data")
-classifier = Sequential()
-classifier.add(Conv2D(32,(3,3), input_shape=(train_data.maxlen,train_data.features,1), activation ='relu'))
-classifier.add(Dropout(0.4))
-classifier.add(MaxPooling2D(pool_size =(2,2)))
-classifier.add(Flatten())
-classifier.add(Dense(units=128, activation='relu'))
-classifier.add(Dense(units=train_data.n_classes, activation='softmax'))
+# classifier = Sequential()
+# classifier.add(Conv2D(32,(3,3), input_shape=(train_data.maxlen,train_data.features,1), activation ='relu'))
+# classifier.add(Dropout(0.4))
+# classifier.add(MaxPooling2D(pool_size =(2,2)))
+# classifier.add(Flatten())
+# classifier.add(Dense(units=128, activation='relu'))
+# classifier.add(Dense(units=train_data.n_classes, activation='softmax'))
 
-classifier.compile(optimizer='adam',loss=keras.losses.sparse_categorical_crossentropy,metrics=['categorical_accuracy'])
-classifier.summary()
+# classifier.compile(optimizer='adam',loss=keras.losses.sparse_categorical_crossentropy,metrics=['categorical_accuracy'])
+# classifier.summary()
+
+classifier = classifier.load_model('test.h5')
 
 class CustomCallback(keras.callbacks.Callback):
     def __init__(self):
