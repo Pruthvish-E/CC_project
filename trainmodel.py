@@ -1,3 +1,4 @@
+import tensorflow as tf
 from keras import optimizers, losses, activations, models
 from keras.callbacks import TensorBoard
 from keras.models import Sequential
