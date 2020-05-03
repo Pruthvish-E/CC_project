@@ -71,7 +71,8 @@ class DataGenerator():
     def __init__(self, heirarchy, path, filename, maxlen):
         self.maxlen = maxlen
         self.path = path
-        self.list_npy_fname(path, heirarchy, filename)
+        self.filename = filename
+        self.list_npy_fname(path, heirarchy, self.filename)
         self.progress = 0
         self.n_samples = self.X.shape[0]
     def get_next_batch(self, batch_size):
