@@ -63,4 +63,6 @@ class DataGenerator():
             pass
 
     def getdata(self):
-        return np.reshape(self.X, (-1, self.maxlen, self.features, 1)), self.y
+#         return np.reshape(self.X, (-1, self.maxlen, self.features, 1)), self.y
+        return self.X, self.y
+
