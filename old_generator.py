@@ -20,7 +20,7 @@ class DataGenerator():
         self.labels = []
         self.X = []
         fpaths = sorted(glob(os.path.join(self.path, r'*/*' + ext)))
-        for fpath in fpaths:
+        for fpath in tqdm(fpaths):
             split_by_slash = fpath.split('/')
             speaker = split_by_slash[-2]
             file_name = split_by_slash[-1]
