@@ -29,11 +29,11 @@ class DataGenerator():
             if(heirarchy == 2):
                 label = label[:label.find('.')]
 
-            self.labels.append(heirarchydict[heirarchy][label].index(1))
             sample = genfromtxt(fpath)
             if(sample.shape[0]<= self.maxlen):
                 self.X.append(sample)
-            
+                self.labels.append(heirarchydict[heirarchy][label].index(1))
+
         print("There are %d samples"%len(self.labels))
         
         #padding section of hte code 
