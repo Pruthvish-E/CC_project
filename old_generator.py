@@ -13,8 +13,8 @@ from scipy.io import wavfile
 import pickle
 with open('dict.pickle', 'rb') as handle:
     heirarchydict = pickle.load(handle)
-class DataGenerator():
 
+class DataGenerator():
     def list_npy_fname(self, dirpath, heirarchy, ext='npy',restrictA=False):
         self.labels = []
         self.X = []
@@ -30,12 +30,13 @@ class DataGenerator():
                 label = label[:label.find('.')]
 
             self.labels.append(heirarchydict[heirarchy][label].index(1))
-            self.X.append(genfromtxt(fpath))
+            sample = genfromtxt(fpath)
+            if(sample.shape[0]<= self.maxlen):
+                self.X.append(sample)
             
         print("There are %d samples"%len(self.labels))
         
         #padding section of hte code 
-        self.maxlen = max([x.shape[0] for x in self.X] + [self.maxlen])
         self.features = self.X[0].shape[1]
         print("The maximum length of the dataset is %d, padding to this length"%self.maxlen)
         X_new = []
@@ -52,7 +53,7 @@ class DataGenerator():
         del self.labels
         
 
-    def __init__(self, heirarchy, path, maxlen = float('-inf')):
+    def __init__(self, heirarchy, path, maxlen):
         self.maxlen = maxlen
         self.path = path
         self.list_npy_fname(path, heirarchy)
