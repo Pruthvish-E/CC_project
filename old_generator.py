@@ -16,7 +16,7 @@ with open('dict.pickle', 'rb') as handle:
     heirarchydict = pickle.load(handle)
 
 class DataGenerator():
-    def list_npy_fname(self, dirpath, heirarchy,filename,ext='npy',restrictA=False):
+    def list_npy_fname(self, dirpath, heirarchy,ext='npy',restrictA=False):
         self.labels = []
         self.X = []
         fpaths = sorted(glob(os.path.join(self.path, r'*/*' + ext)))
@@ -51,13 +51,13 @@ class DataGenerator():
         del X_new
         gc.collect()
         
-        dumpfile = open(filename+"X", 'w')
+        dumpfile = open(str(path)+"X", 'w')
         for item in tqdm(self.X):
             dumpfile.write(str(item)+"\n")
         dumpfile.close()
         
         
-        dumpfile = open(filename+"y", 'w')
+        dumpfile = open(str(path)+"y", 'w')
         for item in tqdm(self.y):
             dumpfile.write(str(item)+"\n")
         dumpfile.close()
@@ -68,11 +68,10 @@ class DataGenerator():
 #         del self.labels
         
 
-    def __init__(self, heirarchy, path, filename, maxlen):
+    def __init__(self, heirarchy, path, maxlen):
         self.maxlen = maxlen
         self.path = path
-        self.filename = filename
-        self.list_npy_fname(path, heirarchy, self.filename)
+        self.list_npy_fname(path, heirarchy)
         self.progress = 0
         self.n_samples = self.X.shape[0]
     def get_next_batch(self, batch_size):
