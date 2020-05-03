@@ -3,6 +3,7 @@ import os
 import numpy as np
 np.random.seed(1969)
 from numpy import genfromtxt
+from tqdm import tqdm
 
 from scipy import signal
 from glob import glob
@@ -40,15 +41,17 @@ class DataGenerator():
         self.features = self.X[0].shape[1]
         print("The maximum length of the dataset is %d, padding to this length"%self.maxlen)
         X_new = []
-        for i in self.X:
+        for i in tqdm(self.X):
             listx = list(i)
             for i in range(self.maxlen - len(listx)):
                 listx.append(np.zeros((self.features,)))
             X_new.append(listx)
         self.X, X_new = X_new, self.X
-
+        print("after double")
         del X_new
+        gc.collect()
         self.X = np.asarray(self.X, dtype = np.float32)
+        print("After X")
         self.y = np.asarray(self.labels, dtype = np.int32)
         del self.labels
         
