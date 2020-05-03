@@ -51,13 +51,13 @@ class DataGenerator():
         del X_new
         gc.collect()
         
-        dumpfile = open(str(path)+"X.txt", 'w')
+        dumpfile = open(str(dirpath)+"X.txt", 'w')
         for item in tqdm(self.X):
             dumpfile.write(str(item)+"\n")
         dumpfile.close()
         
         
-        dumpfile = open(str(path)+"y.txt", 'w')
+        dumpfile = open(str(dirpath)+"y.txt", 'w')
         for item in tqdm(self.y):
             dumpfile.write(str(item)+"\n")
         dumpfile.close()
