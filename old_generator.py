@@ -68,7 +68,7 @@ class DataGenerator():
 #         del self.labels
         
 
-    def __init__(self, heirarchy, path, maxlen):
+    def __init__(self, heirarchy, path, filename, maxlen):
         self.maxlen = maxlen
         self.path = path
         self.list_npy_fname(path, heirarchy)
