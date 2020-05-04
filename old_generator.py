@@ -31,7 +31,7 @@ class DataGenerator():
             if(heirarchy == 2):
                 label = label[:label.find('.')]
 
-            sample = genfromtxt(fpath)
+            sample = genfromtxt(fpath) * 10**10
             if(sample.shape[0]<= self.maxlen):
                 if self.X is None:
                     self.X = np.zeros((751575, self.maxlen, sample.shape[1]), dtype = np.float32)
