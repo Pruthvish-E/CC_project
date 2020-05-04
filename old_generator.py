@@ -58,7 +58,7 @@ class DataGenerator():
         
         
         dumpfile = open(str(dirpath)+"y.txt", 'w')
-        for item in tqdm(self.y):
+        for item in tqdm(self.labels):
             dumpfile.write(str(item)+"\n")
         dumpfile.close()
         
