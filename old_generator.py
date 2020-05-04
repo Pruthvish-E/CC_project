@@ -49,7 +49,9 @@ class DataGenerator():
         self.path = path
         self.list_npy_fname(path, heirarchy)
         self.progress = 0
-        self.n_samples = self.X.shape[0]
+        self.heirarchy = heirarchy
+        self.n_classes = len(heirarchydict[heirarchy])
+        self.n_samples = self.y.shape[0]
         
     def get_class_weights(self):
         total = self.y.shape[0]
@@ -60,5 +62,5 @@ class DataGenerator():
 
     def getdata(self):
 #         return np.reshape(self.X, (-1, self.maxlen, self.features, 1)), self.y
-        return self.X[:count], self.y
+        return self.X[:self.count], self.y
 
