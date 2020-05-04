@@ -50,6 +50,10 @@ class DataGenerator():
         self.list_npy_fname(path, heirarchy)
         self.progress = 0
         self.n_samples = self.X.shape[0]
+        
+    def get_class_weights(self):
+        total = self.y.shape[0]
+        return {heirarchydict[self.heirarchy][key].index(1) : total//np.count_nonzero(self.y == key) for key in heirarchydict[self.heirarchy]}
     def get_next_batch(self, batch_size):
         while True:
             pass
