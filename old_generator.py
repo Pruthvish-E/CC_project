@@ -18,7 +18,8 @@ with open('dict.pickle', 'rb') as handle:
 class DataGenerator():
     def list_npy_fname(self, dirpath, heirarchy,ext='npy',restrictA=False):
         self.labels = []
-        self.X = []
+        self.X = None
+        self.count = 0
         fpaths = sorted(glob(os.path.join(self.path, r'*/*' + ext)))
         for fpath in tqdm(fpaths):
             split_by_slash = fpath.split('/')
@@ -32,41 +33,16 @@ class DataGenerator():
 
             sample = genfromtxt(fpath)
             if(sample.shape[0]<= self.maxlen):
-                self.X.append(sample)
+                if self.X is None:
+                    self.X = np.zeros(751575, self.maxlen, sample.shape[2])
+                self.X[self.count,:sample.shape[0],:sample.shape[1]]= sample
+                self.count+=1
                 self.labels.append(heirarchydict[heirarchy][label].index(1))
 
         print("There are %d samples"%len(self.labels))
-        
-        #padding section of hte code 
-        self.features = self.X[0].shape[1]
-        print("The maximum length of the dataset is %d, padding to this length"%self.maxlen)
-        X_new = []
-        for i in tqdm(self.X):
-            listx = list(i)
-            for i in range(self.maxlen - len(listx)):
-                listx.append(np.zeros((self.features,)))
-            X_new.append(listx)
-        self.X, X_new = X_new, self.X
-        print("after double")
-        del X_new
+        self.y = np.asarray(self.labels, dtype = np.int32)
+        del self.labels
         gc.collect()
-        
-        dumpfile = open(str(dirpath)+"X.txt", 'w')
-        for item in tqdm(self.X):
-            dumpfile.write(str(item)+"\n")
-        dumpfile.close()
-        
-        
-        dumpfile = open(str(dirpath)+"y.txt", 'w')
-        for item in tqdm(self.labels):
-            dumpfile.write(str(item)+"\n")
-        dumpfile.close()
-        
-#         self.X = np.asarray(self.X, dtype = np.float32)
-#         print("After X")
-#         self.y = np.asarray(self.labels, dtype = np.int32)
-#         del self.labels
-        
 
     def __init__(self, heirarchy, path, maxlen):
         self.maxlen = maxlen
@@ -80,5 +56,5 @@ class DataGenerator():
 
     def getdata(self):
 #         return np.reshape(self.X, (-1, self.maxlen, self.features, 1)), self.y
-        return self.X, self.y
+        return self.X[:count], self.y
 
