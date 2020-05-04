@@ -34,7 +34,7 @@ class DataGenerator():
             sample = genfromtxt(fpath)
             if(sample.shape[0]<= self.maxlen):
                 if self.X is None:
-                    self.X = np.zeros(751575, self.maxlen, sample.shape[2])
+                    self.X = np.zeros(751575, self.maxlen, sample.shape[1])
                 self.X[self.count,:sample.shape[0],:sample.shape[1]]= sample
                 self.count+=1
                 self.labels.append(heirarchydict[heirarchy][label].index(1))
