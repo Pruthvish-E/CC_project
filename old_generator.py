@@ -40,20 +40,17 @@ class DataGenerator():
             else:
                 self.label_counts[newlabel] = self.label_counts[newlabel] + 1
 
-            if(self.label_counts[newlabel] == 100):
+            if(self.label_counts[newlabel] >= 32120):
                 continue
             else:
                 sample = genfromtxt(fpath)
-                try:
-                    if(sample.shape[0]<= self.maxlen):
-                        if self.X is None:
-                            self.X = np.zeros((100*7, self.maxlen, sample.shape[1]), dtype = np.float32)
-                        self.X[self.count,:sample.shape[0],:sample.shape[1]]= sample
-                        self.count+=1
-                        self.labels.append(heirarchydict[heirarchy][label].index(1))
-                except:
-                    print(self.label_counts)
-                    break
+                if(sample.shape[0]<= self.maxlen):
+                    if self.X is None:
+                        self.X = np.zeros((32120*7, self.maxlen, sample.shape[1]), dtype = np.float32)
+                    self.X[self.count,:sample.shape[0],:sample.shape[1]]= sample
+                    self.count+=1
+                    self.labels.append(heirarchydict[heirarchy][label].index(1))
+                    
         print("There are %d samples"%len(self.labels))
         self.y = np.asarray(self.labels, dtype = np.int32)
         del self.labels
