@@ -34,21 +34,22 @@ class DataGenerator():
             
             newlabel = heirarchydict[heirarchy][label].index(1)
             
-            try:
-                label_counts[newlabel] += 1;
-            except:
-                label_counts[newlabel] = 1;
+            if newlabel not in label_counts:
+                print("new label found")
+                label_counts[newlabel] = 1
+            else:
+                label_counts[newlabel] = label_counts[newlabel] + 1
 
             if(label_counts[newlabel] == 32120):
-                continue;
-                
-            sample = genfromtxt(fpath)
-            if(sample.shape[0]<= self.maxlen):
-                if self.X is None:
-                    self.X = np.zeros((32120*6, self.maxlen, sample.shape[1]), dtype = np.float32)
-                self.X[self.count,:sample.shape[0],:sample.shape[1]]= sample
-                self.count+=1
-                self.labels.append(heirarchydict[heirarchy][label].index(1))
+                continue
+            else:
+                sample = genfromtxt(fpath)
+                if(sample.shape[0]<= self.maxlen):
+                    if self.X is None:
+                        self.X = np.zeros((32120*7, self.maxlen, sample.shape[1]), dtype = np.float32)
+                    self.X[self.count,:sample.shape[0],:sample.shape[1]]= sample
+                    self.count+=1
+                    self.labels.append(heirarchydict[heirarchy][label].index(1))
 
         print("There are %d samples"%len(self.labels))
         self.y = np.asarray(self.labels, dtype = np.int32)
