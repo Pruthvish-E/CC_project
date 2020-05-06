@@ -17,7 +17,7 @@ with open('dict.pickle', 'rb') as handle:
 
 class DataGenerator():
     def list_npy_fname(self, dirpath, heirarchy,ext='npy',restrictA=False):
-        label_counts = {}
+        self.label_counts = {}
         self.labels = []
         self.X = None
         self.count = 0
@@ -34,19 +34,19 @@ class DataGenerator():
             
             newlabel = heirarchydict[heirarchy][label].index(1)
             
-            if newlabel not in label_counts:
+            if newlabel not in self.label_counts:
                 print("new label found")
-                label_counts[newlabel] = 1
+                self.label_counts[newlabel] = 1
             else:
-                label_counts[newlabel] = label_counts[newlabel] + 1
+                self.label_counts[newlabel] = self.label_counts[newlabel] + 1
 
-            if(label_counts[newlabel] == 32120):
+            if(self.label_counts[newlabel] == 100):
                 continue
             else:
                 sample = genfromtxt(fpath)
                 if(sample.shape[0]<= self.maxlen):
                     if self.X is None:
-                        self.X = np.zeros((32120*7, self.maxlen, sample.shape[1]), dtype = np.float32)
+                        self.X = np.zeros((100*7, self.maxlen, sample.shape[1]), dtype = np.float32)
                     self.X[self.count,:sample.shape[0],:sample.shape[1]]= sample
                     self.count+=1
                     self.labels.append(heirarchydict[heirarchy][label].index(1))
