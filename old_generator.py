@@ -43,7 +43,7 @@ class DataGenerator():
             if(self.label_counts[newlabel] >= 32120):
                 continue
             else:
-                sample = genfromtxt(fpath)
+                sample = genfromtxt(fpath) * 10**10
                 if(sample.shape[0]<= self.maxlen):
                     if self.X is None:
                         self.X = np.zeros((32120*7, self.maxlen, sample.shape[1]), dtype = np.float32)
