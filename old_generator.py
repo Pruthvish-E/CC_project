@@ -17,6 +17,7 @@ with open('dict.pickle', 'rb') as handle:
 
 class DataGenerator():
     def list_npy_fname(self, dirpath, heirarchy,ext='npy',restrictA=False):
+        label_counts = {}
         self.labels = []
         self.X = None
         self.count = 0
@@ -30,11 +31,21 @@ class DataGenerator():
             label = file_name_split[1+heirarchy]
             if(heirarchy == 2):
                 label = label[:label.find('.')]
+            
+            newlabel = heirarchydict[heirarchy][label].index(1)
+            
+            try:
+                label_counts[newlabel] += 1;
+            except:
+                label_counts[newlabel] = 1;
 
-            sample = genfromtxt(fpath) * 10**10
+            if(label_counts[newlabel] == 32120):
+                continue;
+                
+            sample = genfromtxt(fpath)
             if(sample.shape[0]<= self.maxlen):
                 if self.X is None:
-                    self.X = np.zeros((751575, self.maxlen, sample.shape[1]), dtype = np.float32)
+                    self.X = np.zeros((32120*6, self.maxlen, sample.shape[1]), dtype = np.float32)
                 self.X[self.count,:sample.shape[0],:sample.shape[1]]= sample
                 self.count+=1
                 self.labels.append(heirarchydict[heirarchy][label].index(1))
